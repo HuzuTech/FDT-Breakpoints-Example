@@ -29,7 +29,7 @@ package
         public static var LOADED_AGAIN : int = 3;
 
         public var externalSWF : ITestInterface;
-//        public var blabalbal:ExternalSwf;
+
         private var _loader : URLLoader;
         private var _loaderData : ByteArray;
 

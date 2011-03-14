@@ -15,6 +15,9 @@ package
 
         private function onClicked(event : MouseEvent) : void
         {
+            /*
+             * Add a breakpoint on the trace call
+             */
             trace("test function called");
         }
     }
