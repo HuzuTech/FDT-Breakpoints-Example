@@ -57,7 +57,7 @@ package
                     _currentState = UNLOADED;
                     break;
                 case UNLOADED:
-                    loadSWFAgain();
+                    loadSWF();
                     _button.label = "SWF has been reloaded";
                     _button.enabled = false;
                     _currentState = LOADED_AGAIN;
@@ -69,12 +69,17 @@ package
 
         }
 
-        private function loadSWFAgain() : void
-        {
-        }
-
         private function unloadSWF() : void
         {
+            externalSWF.addEventListener(Event.REMOVED_FROM_STAGE, onExternalRemoved);
+            removeChild(externalSWF);
+        }
+
+        private function onExternalRemoved(event : Event) : void
+        {
+            externalSWF.removeEventListener(Event.REMOVED_FROM_STAGE, onExternalRemoved);
+            externalSWF.loaderInfo.loader.unloadAndStop();
+            externalSWF = null;
         }
 
         private function loadSWF() : void
@@ -119,7 +124,7 @@ package
 
         private function onContentLoaded(event : Event) : void
         {
-            var loaderInfo:LoaderInfo = event.currentTarget as LoaderInfo;
+            var loaderInfo : LoaderInfo = event.currentTarget as LoaderInfo;
             loaderInfo.removeEventListener(Event.COMPLETE, onContentLoaded);
 
             externalSWF = loaderInfo.content as ExternalSwf;
