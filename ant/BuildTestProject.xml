@@ -3,7 +3,7 @@
     <property file="../ant/config.properties" />
     <property name="environment.FLEX_HOME" value="${environment.flex_home}"/>
 
-    <target name="all" depends="Main, ExternalSWF" >
+    <target name="all" depends="ExternalSWF, Main" >
         <fdt.launch.application
             projectname="test_load_unload"
             debug = "true"
@@ -19,6 +19,8 @@
             <arg line=" +configname=${FLEX_CONFIGNAME}" />
             <arg line=" -static-link-runtime-shared-libraries=true" />
             <arg line=" -compiler.library-path ${MIN_COMP}" />
+            <arg line=" -compiler.library-path ${environment.FLEX_HOME}/frameworks/libs" />
+            <arg line=" -debug=true" />
             <arg line=" -- ../src/Main.as" />
         </exec>
     </target>
@@ -30,6 +32,8 @@
             <arg line=" +configname=${FLEX_CONFIGNAME}" />
             <arg line=" -static-link-runtime-shared-libraries=true" />
             <arg line=" -compiler.library-path ${MIN_COMP}" />
+            <arg line=" -compiler.library-path ${environment.FLEX_HOME}/frameworks/libs" />
+            <arg line=" -debug=true" />
             <arg line=" -- ../src/ExternalSwf.as" />
         </exec>
     </target>

@@ -1,32 +1,27 @@
 package
 {
-    import flash.events.MouseEvent;
-    import com.bit101.components.PushButton;
-
+    import flash.display.DisplayObjectContainer;
     import flash.display.Sprite;
 
     /**
      * (c) HuzuTech 2011
      */
-    public class ExternalSwf extends Sprite
+    public class ExternalSwf extends Sprite implements ITestInterface
     {
-        public var testButton:PushButton;
+        public var testButton:TestButton;
 
         public function ExternalSwf()
         {
-            testButton = new PushButton();
+            testButton = new TestButton();
             testButton.label = "Click Me!!";
             addChild(testButton);
 
-           testButton.addEventListener(MouseEvent.CLICK, onClick);
+
         }
 
-        private function onClick(event : MouseEvent) : void
+        public function getDisplayObjectContainer():DisplayObjectContainer
         {
-            /*
-             * Put a break point on the trace call
-             */
-            trace("test function called");
+            return this;
         }
     }
 }

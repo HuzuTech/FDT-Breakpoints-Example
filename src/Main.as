@@ -28,7 +28,8 @@ package
         public static var UNLOADED : int = 2;
         public static var LOADED_AGAIN : int = 3;
 
-        public var externalSWF : ExternalSwf;
+        public var externalSWF : ITestInterface;
+//        public var blabalbal:ExternalSwf;
         private var _loader : URLLoader;
         private var _loaderData : ByteArray;
 
@@ -71,14 +72,14 @@ package
 
         private function unloadSWF() : void
         {
-            externalSWF.addEventListener(Event.REMOVED_FROM_STAGE, onExternalRemoved);
-            removeChild(externalSWF);
+            externalSWF.getDisplayObjectContainer().addEventListener(Event.REMOVED_FROM_STAGE, onExternalRemoved);
+            removeChild(externalSWF.getDisplayObjectContainer());
         }
 
         private function onExternalRemoved(event : Event) : void
         {
-            externalSWF.removeEventListener(Event.REMOVED_FROM_STAGE, onExternalRemoved);
-            externalSWF.loaderInfo.loader.unloadAndStop();
+            externalSWF.getDisplayObjectContainer().removeEventListener(Event.REMOVED_FROM_STAGE, onExternalRemoved);
+            externalSWF.getDisplayObjectContainer().loaderInfo.loader.unloadAndStop();
             externalSWF = null;
         }
 
@@ -119,7 +120,7 @@ package
             var context : LoaderContext = new LoaderContext(false, applicationDomain);
             var loader : Loader = new Loader();
             loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onContentLoaded);
-            loader.loadBytes(_loaderData, context);
+            loader.loadBytes(_loaderData , context);
         }
 
         private function onContentLoaded(event : Event) : void
@@ -127,10 +128,10 @@ package
             var loaderInfo : LoaderInfo = event.currentTarget as LoaderInfo;
             loaderInfo.removeEventListener(Event.COMPLETE, onContentLoaded);
 
-            externalSWF = loaderInfo.content as ExternalSwf;
+            externalSWF = loaderInfo.content as ITestInterface;
 
-            addChild(externalSWF);
-            externalSWF.x = externalSWF.y = 200;
+            addChild(externalSWF.getDisplayObjectContainer());
+            externalSWF.getDisplayObjectContainer().x = externalSWF.getDisplayObjectContainer().y = 200;
         }
     }
 }
